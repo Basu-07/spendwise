@@ -28,21 +28,21 @@ function generateOtp(): string {
 }
 
 export async function sendOtp(phone: string) {
-  if (!import.meta.env.VITE_TEXTBEE_API_KEY) {
-    throw new Error('VITE_TEXTBEE_API_KEY is missing in .env (restart the dev server).')
+  if (!import.meta.env.TEXTBEE_API_KEY) {
+    throw new Error('TEXTBEE_API_KEY is missing in .env (restart the dev server).')
   }
-  if (!import.meta.env.VITE_TEXTBEE_DEVICE_ID) {
-    throw new Error('VITE_TEXTBEE_DEVICE_ID is missing in .env (restart the dev server).')
+  if (!import.meta.env.TEXTBEE_DEVICE_ID) {
+    throw new Error('TEXTBEE_DEVICE_ID is missing in .env (restart the dev server).')
   }
 
   const otp = generateOtp()
 
   const textbee = new Textbee({
-    apiKey: import.meta.env.VITE_TEXTBEE_API_KEY,
+    apiKey: import.meta.env.TEXTBEE_API_KEY,
   })
 
   const result = await textbee.sendSms({
-    deviceId: import.meta.env.VITE_TEXTBEE_DEVICE_ID,
+    deviceId: import.meta.env.TEXTBEE_DEVICE_ID,
     recipients: [phone],
     message: `Your SpendWise OTP is: ${otp}. It expires in 5 minutes.`,
   })
